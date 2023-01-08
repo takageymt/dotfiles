@@ -1,0 +1,28 @@
+{
+  "coc.source.file.ignoreHidden": false,
+  "python.venvPath": ".",
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length", "100"],
+  "prettier.enable": true,
+  "prettier.printWidth": 100,
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.semi": true,
+  "prettier.singleQuote": false,
+  "prettier.trailingComma": "all",
+  "prettier.bracketSpacing": true,
+  "prettier.allowParens": "always",
+  "prettier.proseWrap": "always",
+  "prettier.endOfLine": "lf",
+  "prettier.embeddedLanguageFormatting": "auto",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "html",
+    "json",
+    "typescript",
+    "javascript",
+    "typescriptreact",
+    "javascriptreact"
+  ]
+}
