@@ -37,7 +37,7 @@ set history=1000
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 " [C] 補完にビジュアルなメニューを使用する。ポップアップメニューにする
-set wildmenu wildoptions=pum
+" set wildmenu wildoptions=pum
 " [C] 補完時、最長マッチ→順番に選択
 set wildmode=list:longest,full
 
@@ -93,8 +93,8 @@ set cmdheight=2
 
 " カラースキーマの設定
 " colorscheme elflord
-colorscheme badwolf
-autocmd vimrc ColorScheme * highlight Comment ctermfg=248
+colorscheme codedark
+" autocmd vimrc ColorScheme * highlight Comment ctermfg=248
 
 filetype plugin on
 filetype indent on
@@ -202,7 +202,8 @@ call plug#end()
 " -------------
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_theme='wombat'
+" let g:airline_theme='wombat'
+let g:airline_theme='codedark'
 
 " -------------
 "  coc-nvim
@@ -293,4 +294,4 @@ map <Leader>k <Plug>(easymotion-k)
 " カレントワーキングディレクトリで Fern を開く
 nnoremap <silent> sf :Fern .<CR>
 " 現在開いているファイルの親ディレクトリで Fern を開く
-nnoremap <silent> st :Fern %:h<CR>
+nnoremap <silent> sF :Fern %:h<CR>
