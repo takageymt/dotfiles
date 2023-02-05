@@ -6,20 +6,24 @@ sudo apt-get update
 sudo apt-get upgrade -y
 
 sudo apt-get install -y \
-	vim \
-	git \
-	make \
-	tmux \
-	curl \
-	lsb-release \
-	ca-certificates 
+    vim \
+    git \
+    zsh \
+    make \
+    tmux \
+    curl \
+    xsel \
+    lsb-release \
+    ca-certificates 
+
+chsh -s $(which zsh)
 
 readonly ARCH=$(dpkg --print-architecture)
 readonly DIST_CODE=$(lsb_release -cs)
 
 ## Vim
 curl -fsSLo $HOME/.vim/autoload/plug.vim --create-dirs \
-	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 ## Google Chrome
 ### インストール後の処理で ${SRCLISTS}/google-chrome.list の内容が
@@ -39,33 +43,33 @@ sudo install -d ${KEYRINGS}
 
 ## VSCode
 sudo curl -fsSL https://packages.microsoft.com/keys/microsoft.asc -o \
-	${KEYRINGS}/microsoft.asc
+    ${KEYRINGS}/microsoft.asc
 echo "deb [arch=${ARCH} signed-by=${KEYRINGS}/microsoft.asc] \
-	https://packages.microsoft.com/repos/code stable main" | \
-	sudo tee ${SRCLISTS}/vscode.list > /dev/null
+    https://packages.microsoft.com/repos/code stable main" | \
+    sudo tee ${SRCLISTS}/vscode.list > /dev/null
 
 ## Docker
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o \
-	${KEYRINGS}/docker-key.asc
+    ${KEYRINGS}/docker-key.asc
 echo "deb [arch=${ARCH} signed-by=${KEYRINGS}/docker-key.asc] \
-	https:download.docker.com/linux/ubuntu ${DIST_CODE} stable" | \
-	sudo tee ${SRCLISTS}/docker.list > /dev/null
+    https:download.docker.com/linux/ubuntu ${DIST_CODE} stable" | \
+    sudo tee ${SRCLISTS}/docker.list > /dev/null
 
 ## Github CLI
 sudo curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg -o \
-	${KEYRINGS}/githubcli-archive-keyring.gpg
+    ${KEYRINGS}/githubcli-archive-keyring.gpg
 echo "deb [arch=${ARCH} signed-by=${KEYRINGS}/githubcli-archive-keyring.gpg] \
-	https://cli.github.com/packages stable main" | \
-	sudo tee ${SRCLISTS}/github-cli.list > /dev/null
+    https://cli.github.com/packages stable main" | \
+    sudo tee ${SRCLISTS}/github-cli.list > /dev/null
 
 sudo apt update
 sudo apt install -y \
-	gh \
-	code \
-	docker-ce \
-	docker-ce-cli \
-	containerd.io \
-	docker-compose-plugin
+    gh \
+    code \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io \
+    docker-compose-plugin
 
 sudo systemctl --now enable docker
 sudo usermod -aG docker ${USER}

@@ -20,10 +20,8 @@ nnoremap s <Nop>
 " -------------
 "  Motion/Edit
 " -------------
-" [NVO] E で行末まで移動
-noremap E $
-" [NVO] $ でWORDの末尾まで移動
-noremap $ E
+" [NVO] Ctrl+E で行末まで移動
+noremap <C-e> $
 " [N] Y で行末までコピー(d/D と対応させる)
 nnoremap Y y$
 " [N] クリップボードへコピー
@@ -193,7 +191,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'easymotion/vim-easymotion'
+Plug 'tomasiser/vim-code-dark'
 Plug 'lambdalisue/fern.vim'
 
 call plug#end()
