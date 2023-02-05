@@ -8,7 +8,7 @@ augroup vimrc
 augroup END
 
 " リーダーキーをスペースに設定
-let mapleader = "\<SPACE>"
+let mapleader = "\<C-s>"
 " 使用中: ahw(rn)fel
 
 " ウィンドウ、バッファ関連の prefix
@@ -267,25 +267,6 @@ nmap <leader>f  <Plug>(coc-format-selected)
 command! -nargs=0 Format :call CocActionAsync('format')
 " Add `:OR` command for organize imports of the current buffer
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-
-" -------------
-"  vim-easymotion
-"  https://github.com/easymotion/vim-easymotion
-" -------------
-" map <Leader> <Plug>(easymotion-prefix)
-
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-let g:EasyMotion_smartcase = 1 " Turn on case-insensitive feature
-
-
-"d Jump to anywhere you want with minimal keystrokes, with just one key binding.
-nmap <leader>e <Plug>(easymotion-bd-f2)
-
-" JK motions: Line motions
-map <Leader>l <Plug>(easymotion-bd-jk)
-nmap <Leader>l <Plug>(easymotion-overwin-line)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
 
 " -------------
 "  fern.vim
