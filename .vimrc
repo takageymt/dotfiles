@@ -1,15 +1,17 @@
-" 内部文字コードと .vimrc 含む vim-script の文字コードを指定
 set encoding=utf-8
 scriptencoding utf-8
+" 内部文字コードと .vimrc 含む vim-script の文字コードを指定
+" 日本語コメントを入力する前に設定しておく
 
 " .vimrc 内で使用する autocmd のグループ
 augroup vimrc
     autocmd!
 augroup END
 
-" リーダーキーをスペースに設定
+" リーダーキーを<C-s>に設定
+" 使用中: adhw(rn)fel
 let mapleader = "\<C-s>"
-" 使用中: ahw(rn)fel
+noremap <C-s> <Nop>
 
 " ウィンドウ、バッファ関連の prefix
 nnoremap s <Nop>
@@ -20,6 +22,10 @@ nnoremap s <Nop>
 " -------------
 "  Motion/Edit
 " -------------
+" [NVO] Ctrl+A で行の最初の文字まで移動
+noremap <C-a> ^
+" (<C-a> の機能を完全に潰さないように ^ と入れ替えておく)
+noremap ^ <C-a>
 " [NVO] Ctrl+E で行末まで移動
 noremap <C-e> $
 " [N] Y で行末までコピー(d/D と対応させる)
@@ -31,16 +37,6 @@ set whichwrap=b,s,h,l,<,>,[,]
 " [I] BSでautoindent,改行文字,挿入開始位置より前の文字列の削除を許可
 set backspace=indent,eol,start
 
-" [C] コマンドライン履歴
-set history=1000
-" [C] <C-p>/<C-n> で履歴を辿る
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-" [C] 補完にビジュアルなメニューを使用する。ポップアップメニューにする
-" set wildmenu wildoptions=pum
-" [C] 補完時、最長マッチ→順番に選択
-set wildmode=list:longest,full
-
 " [I] 括弧挿入時、対応する括弧へ一瞬ジャンプする
 set showmatch matchtime=1
 " [I] 補完のポップアップメニューの高さ
@@ -51,6 +47,22 @@ nnoremap <Leader>a ggVG
 
 " [N] フォーマット
 nnoremap Q gq
+
+" -------------
+"  CommandLine
+" -------------
+" [C] コマンドライン履歴
+set history=1000
+" [C] <C-p>/<C-n> で履歴を辿る
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+" [C] 補完にビジュアルなメニューを使用する。ポップアップメニューにする
+" set wildmenu wildoptions=pum
+" [C] 補完時、最長マッチ→順番に選択
+set wildmode=list:longest,full
+
+" [C] %% でカレントバッファのディレクトリパスに展開
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h') . '/' : '%%'
 
 " -------------
 "  Search
@@ -66,8 +78,8 @@ set wrapscan
 set ignorecase smartcase
 
 " [N] ハイライト解除
-nnoremap <Leader>h :nohlsearch<CR>
-nnoremap <Esc><Esc> :nohlsearch<CR><ESC>
+nnoremap <Leader>h :<C-u>nohlsearch<CR>
+nnoremap <Esc><Esc> :<C-u>nohlsearch<CR><ESC>
 
 " -------------
 "  View
@@ -78,9 +90,9 @@ set number
 set cursorline
 " syntax highlight
 syntax on
-" NFAエンジンでハイライトを早くする
+" NFAエンジン(2)でハイライトを早くする。0 で自動選択
 set regexpengine=0
-" autocmd vimrc FileType typescript,javascript,json setl regexpengine=2
+" autocmd vimrc FileType typescript,javascript,json setlocal regexpengine=2
 
 " 長い行の折り返しがあるとき、できる限り省略しない
 set display=lastline
@@ -93,8 +105,8 @@ set cmdheight=2
 
 " カラースキーマの設定
 " colorscheme elflord
-colorscheme codedark
 " autocmd vimrc ColorScheme * highlight Comment ctermfg=248
+colorscheme codedark
 
 filetype plugin on
 filetype indent on
@@ -121,25 +133,25 @@ set smartindent
 " 保存なしでバッファ移動を許可
 set hidden
 " [N] バッファリストの前後へ移動
-nnoremap <silent> <C-p> :bprev<CR>
-nnoremap <silent> <C-n> :bnext<CR>
-nnoremap <silent> [b :bprev<CR>
-nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> <C-p> :<C-u>bprev<CR>
+nnoremap <silent> <C-n> :<C-u>bnext<CR>
+nnoremap <silent> [b :<C-u>bprev<CR>
+nnoremap <silent> ]b :<C-u>bnext<CR>
 " バッファの内容を保存する前に、末尾の空白文字を全て削除
 autocmd vimrc BufWritePre * %s/\s\+$//e
 
 " [N] バッファ保存
-nnoremap <Leader>w :w<CR>
+nnoremap <Leader>w :<C-u>w<CR>
 
-" バッファを閉じる
-nnoremap <silent> sq :bd<CR>
+" [N] バッファを閉じる
+nnoremap <silent> sq :<C-u>bd<CR>
 
 " -------------
 "  QuickFix
 " -------------
 " quickfixリストの前後へ移動
-nnoremap <silent> [c :cprev<CR>
-nnoremap <silent> ]c :cnext<CR>
+nnoremap <silent> [c :<C-u>cprev<CR>
+nnoremap <silent> ]c :<C-u>cnext<CR>
 
 " -------------
 "  Windows
@@ -172,7 +184,8 @@ nnoremap s= <C-w>=
 "  Bell
 " -------------
 " ベルを鳴らさない
-set visualbell t_vb=
+set t_vb=
+set visualbell
 set noerrorbells
 
 " =============
@@ -187,7 +200,12 @@ set noerrorbells
 call plug#begin('~/.vim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" cs{char1}{char2}  | surround を {char1} から {char2} に変更
+" ds{char}          | surround の {char} を削除
+" ys{textobj}{char} | {textobj} を {char} で囲む
 Plug 'tpope/vim-surround'
+" gcc         | 現在行をコメントアウト
+" gc{textobj} | {textobj} をコメントアウト
 Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -267,6 +285,9 @@ nmap <leader>f  <Plug>(coc-format-selected)
 command! -nargs=0 Format :call CocActionAsync('format')
 " Add `:OR` command for organize imports of the current buffer
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Show all diagnostics
+nnoremap <silent><nowait> <leader>d  :<C-u>CocList diagnostics<cr>
 
 " -------------
 "  fern.vim
