@@ -14,9 +14,12 @@ sudo apt-get install -y \
     curl \
     xsel \
     lsb-release \
-    ca-certificates 
+    ca-certificates
 
-chsh -s $(which zsh)
+## chsh を使ってログインシェルを変更すると、IM設定がバグる
+## 代わりに、~/.bashrc に `exec $(which zsh) -i` を入れる
+## https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=983116
+# chsh -s $(which zsh)
 
 readonly ARCH=$(dpkg --print-architecture)
 readonly DIST_CODE=$(lsb_release -cs)
