@@ -13,6 +13,7 @@ sudo apt-get install -y \
     tmux \
     curl \
     xsel \
+    ripgrep \
     lsb-release \
     ca-certificates
 

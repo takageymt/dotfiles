@@ -1,0 +1,77 @@
+# -*- mode: sh -*-
+# ripgrep
+
+# 必要があれば PCRE2 を使用。ただし通常より重い
+--engine=auto
+
+# マッチした行とファイル名を1行で表示
+# デフォルト(--heading)だと上に表示される
+--no-heading
+
+# 255文字以上の行を省略する
+--max-columns=255
+--max-columns-preview
+
+# 行番号を表示
+--line-number
+
+# 左側のスペースを削除して表示
+--trim
+
+# 圧縮ファイルの中身も見る
+--search-zip
+
+# *.min.{js,css,html} を除外する
+--type-not=minified
+
+# 大文字と小文字を区別しない
+--ignore-case
+
+## --- ここから先はメモ ---
+
+## 大文字と小文字を区別する
+# -s, --case-sensitive
+
+## 大文字が含まれていたら大小文字を区別する
+# -S, --smart-case
+
+## 単語(前後に空白文字がある)として検索する
+# -w, --word-regexp
+
+## 一行完全マッチ
+# -x, --line-regexp
+
+## 正規表現としない
+# -F, --fixed-strings
+
+## ファイル名のみ表示
+# -l, --file-with-matches
+
+## ファイルごとに出力行数を制限
+# -max-count=<N>
+
+## ファイル名を表示しない
+# -I, --no-filename
+
+## 1行にマッチが複数ある場合に1行にまとめない
+# --vimgrep
+
+## マッチした行数を表示する
+# -c, --count --include-zero
+
+## マッチした個数を表示する
+# --count-matches --include-zero
+
+## ファイルをGLOB形式で絞る。!<PATTERN>で無視する
+# --glob=<PATTERN>
+
+## 除外ルールを緩める
+## デフォルトでは、
+## 1. ignoreファイルで無視されたファイル
+## 2. 隠しファイル
+## 3. バイナリファイル
+## が除外されている
+# -u, -uu, -uuu
+
+## ファイルタイプを指定する
+# -t, --type=<TYPE>
