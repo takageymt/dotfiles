@@ -127,3 +127,7 @@ if which pbcopy >/dev/null 2>&1; then
 elif which xsel >/dev/null 2>&1; then
     alias pbcopy='xsel --input --clipboard'
 fi
+
+lscolor() {
+  print -cP $(seq -w 0 255 | xargs -I# -r echo "%B%F{#}#%f%b")
+}
