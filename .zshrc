@@ -115,12 +115,14 @@ setopt prompt_subst
 # PROMPT="$p_user:$p_path "'${vcs_info_msg_0_}'$'\n'"$p_time $p_prom "
 PROMPT='${vcs_info_msg_0_}'" $p_path"$'\n'"$p_time$p_prom "
 
-
 ########################
 # エイリアス
 ########################
+alias hi='echo "hi ${USER}!"'
+alias t='tmux'
 alias cp='cp -i'
 alias mv='mv -i'
+alias less='less -R'
 
 if which pbcopy >/dev/null 2>&1; then
     :
@@ -131,3 +133,9 @@ fi
 lscolor() {
   print -cP $(seq -w 0 255 | xargs -I# -r echo "%B%F{#}#%f%b")
 }
+
+########################
+# n (node js)
+########################
+export N_PREFIX="$HOME/.local/lib/n"
+export PATH="$N_PREFIX/bin:${PATH}"
