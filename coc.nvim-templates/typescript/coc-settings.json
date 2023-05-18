@@ -10,7 +10,7 @@
     "tsserver.enable": true,
     "tsserver.tsconfigPath": "./tsconfig.json",
     "tsserver.useLocalTsdk": true,
-    "tsserver.tsdk": "./client/node_modules/typescript/lib",
+    "tsserver.tsdk": "./node_modules/typescript/lib",
     "typescript.validate.enable": true,
     "typescript.suggest.enabled": true,
     "typescript.suggest.autoImports": true,

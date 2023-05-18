@@ -90,11 +90,23 @@ alias history='history -t "%F %T"'
 # 補完
 ########################
 # 補完を有効にする
-if [ -e /usr/local/share/zsh-completions ]; then
-    fpath=(/usr/local/share/zsh-completions $fpath)
-fi
-autoload -Uz compinit
-compinit -u
+case ${OSTYPE} in
+  darwin*)
+    if type brew &>/dev/null; then
+      FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+      autoload -Uz compinit
+      compinit -u
+    fi
+    ;;
+  linux*)
+    if [ -e /usr/local/share/zsh-completions ]; then
+        fpath=(/usr/local/share/zsh-completions $fpath)
+    fi
+    autoload -Uz compinit
+    compinit -u
+    ;;
+esac
 # そのまま補完→候補がなければ小文字を大文字にして補完
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}'
 
@@ -119,11 +131,75 @@ PROMPT='${vcs_info_msg_0_}'" $p_path"$'\n'"$p_time$p_prom "
 ########################
 # エイリアス
 ########################
+AWK=awk
+case ${OSTYPE} in
+  darwin*)
+    AWK=gawk
+    ;;
+  linux*)
+    AWK=awk
+    ;;
+esac
+
 alias cp='cp -i'
 alias mv='mv -i'
+alias less='less -R'
 
 if which pbcopy >/dev/null 2>&1; then
     :
 elif which xsel >/dev/null 2>&1; then
     alias pbcopy='xsel --input --clipboard'
 fi
+
+function mkcd() {
+    mkdir -p $1 && cd $1
+}
+alias mk='mkcd'
+
+function script_date() {
+    script $(date +'%Y%m%d%H%M%S')
+}
+alias script='script_date'
+
+function c2t() {
+  if [ $# -eq 0 ]; then
+    tr '\t' ' ' | tr ',' '\t'
+  else
+    cat $@ | tr '\t' ' ' | tr ',' '\t'
+  fi
+}
+
+function t2c() {
+  if [ $# -eq 0 ]; then
+    tr '\t' ','
+  else
+    cat $@ | tr '\t' ','
+  fi
+}
+
+function xcsv() {
+  function __xcsv() {
+    tr '\t' ' ' | $AWK -vFPAT='([^,]*)|("[^"]+")' -vOFS='\t' '{$1=$1; print $0}' | tr -d ',"' | tr '\t' ','
+  }
+
+  if [ $# -eq 0 ]; then
+    __xcsv -
+  else
+    cat $@ | __xcsv
+  fi
+}
+
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
