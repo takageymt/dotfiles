@@ -8,9 +8,12 @@ case $- in
       *) return ;;
 esac
 
+bindkey -e
+
 ########################
 # 環境
 ########################
+export EDITOR=vim
 # プロンプト 以外でも色を使えるようにする
 # fore: ${fg[color]}...${reset_color}
 # back: ${bg[color]}...${reset_color}
@@ -139,13 +142,16 @@ PROMPT='${vcs_info_msg_0_}'" $p_path"$'\n'"$p_time$p_prom "
 ########################
 # エイリアス
 ########################
+if [ -d /opt/homebrew ]: then
+  export PATH=/opt/homebrew/bin:$PATH
+fi
+
 AWK=awk
+ZCAT=zcat
 case ${OSTYPE} in
   darwin*)
     AWK=gawk
-    ;;
-  linux*)
-    AWK=awk
+    ZCAT=gzcat
     ;;
 esac
 
@@ -154,6 +160,7 @@ alias t='tmux'
 alias cp='cp -i'
 alias mv='mv -i'
 alias less='less -R'
+alias rg1='rg --no-line-number --max-columns=0'
 function mkcd() {
     mkdir -p $1 && cd $1
 }
@@ -164,11 +171,19 @@ function script_date() {
 }
 alias script='script_date'
 
+function s2t() {
+  if [ $# -eq 0 ]; then
+    tr '\t' '_' | tr ' ' '\t'
+  else
+    cat $@ | tr '\t' '_' | tr ' ' '\t'
+  fi
+}
+
 function c2t() {
   if [ $# -eq 0 ]; then
-    tr '\t' ' ' | tr ',' '\t'
+    tr '\t' '_' | tr ',' '\t'
   else
-    cat $@ | tr '\t' ' ' | tr ',' '\t'
+    cat $@ | tr '\t' '_' | tr ',' '\t'
   fi
 }
 
@@ -189,6 +204,14 @@ function xcsv() {
     __xcsv -
   else
     cat $@ | __xcsv
+  fi
+}
+
+function lscolumn() {
+  if [[ $(file $1) =~ gzip ]]; then
+    $ZCAT $1 | head -n 1 $1 | tr ',' '\n' | cat -n
+  else
+    head -n 1 $1 | tr ',' '\n' | cat -n
   fi
 }
 
