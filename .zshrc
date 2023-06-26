@@ -142,7 +142,7 @@ PROMPT='${vcs_info_msg_0_}'" $p_path"$'\n'"$p_time$p_prom "
 ########################
 # エイリアス
 ########################
-if [ -d /opt/homebrew ]: then
+if [ -d /opt/homebrew ]; then
   export PATH=/opt/homebrew/bin:$PATH
 fi
 
